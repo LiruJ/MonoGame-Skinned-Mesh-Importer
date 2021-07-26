@@ -15,7 +15,7 @@ The tool was tested with Blender 2.93.1 exporting to FBX files, more on that bel
 
 # Installation
 
-This tool is available on NuGet as Lovebirb.MonoGame.SkinnedMeshImporter and can be installed in Visual Studio with the NuGet package manager.
+This tool is available on NuGet [here](https://www.nuget.org/packages/Lovebirb.MonoGame.SkinnedMeshImporter/) and can be installed in Visual Studio with the NuGet package manager.
 
 # Usage
 
