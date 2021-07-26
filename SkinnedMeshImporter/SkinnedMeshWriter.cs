@@ -10,7 +10,7 @@ namespace SkinnedMeshImporter
     [ContentTypeWriter]
     public class SkinnedMeshWriter : ContentTypeWriter<SkinnedModelData>
     {
-        public override string GetRuntimeReader(TargetPlatform targetPlatform) => "ContentTest.SkinnedMeshReader, ContentTest";
+        public override string GetRuntimeReader(TargetPlatform targetPlatform) => typeof(SkinnedMeshReader).AssemblyQualifiedName;
 
         protected override void Write(ContentWriter output, SkinnedModelData value)
         {

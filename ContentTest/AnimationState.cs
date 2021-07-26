@@ -72,7 +72,7 @@ namespace ContentTest
 
             // Load the skinned character model.
             character = Content.Load<SkinnedModel>("Male");
-
+            
             // Create an animation player and set its animation.
             animationPlayer = new AnimationPlayer(character) { Animation = character.Animations[currentAnimationIndex] };
         }

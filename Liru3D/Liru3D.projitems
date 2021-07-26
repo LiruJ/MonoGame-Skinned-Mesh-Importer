@@ -29,5 +29,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\SkinnedMesh.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SkinnedVertex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SkinnedModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Data\SkinnedMeshReader.cs" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,10 @@
 ﻿using Liru3D.Animations;
-using Liru3D.Models;
-using Liru3D.Models.Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System.Collections.Generic;
 
-namespace ContentTest
+namespace Liru3D.Models.Data
 {
     public class SkinnedMeshReader : ContentTypeReader<SkinnedModel>
     {
@@ -15,7 +13,7 @@ namespace ContentTest
             // Read the number of meshes and create a new array to store them.
             int meshCount = input.ReadInt32();
             SkinnedMeshData[] meshes = new SkinnedMeshData[meshCount];
-            
+
             // Load each mesh.
             for (int meshIndex = 0; meshIndex < meshCount; meshIndex++)
             {
@@ -117,7 +115,7 @@ namespace ContentTest
                 // Set the bone.
                 bones[boneIndex] = boneData;
             }
-            
+
             // Create and return the model data with the loaded meshes, animations, and bones.
             return SkinnedModel.CreateFrom(input.GetGraphicsDevice(), new SkinnedModelData(meshes, animations, bones));
         }
