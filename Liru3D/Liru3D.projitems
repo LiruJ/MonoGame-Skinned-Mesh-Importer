@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6efba8a9-a407-4029-bdd0-651d22a87386</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Liru3D</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Animations\Animation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animations\AnimationPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animations\BoneChannel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animations\BoneChannelPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animations\ChannelComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Animations\Keyframe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Bone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Data\BoneData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Data\SkinnedMeshData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Data\SkinnedModelData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SkinnedMesh.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SkinnedVertex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SkinnedModel.cs" />
+  </ItemGroup>
+</Project>

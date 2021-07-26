@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedMeshImporter", "SkinnedMeshImporter\SkinnedMeshImporter.csproj", "{139074A2-BE6A-4097-BEE8-A7C727C457E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentTest", "ContentTest\ContentTest.csproj", "{F4DD36E9-FCA2-4C91-A6AE-BC65B2154DB2}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Liru3D", "Liru3D\Liru3D.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Liru3D\Liru3D.projitems*{139074a2-be6a-4097-bee8-a7c727c457e0}*SharedItemsImports = 5
+		Liru3D\Liru3D.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{139074A2-BE6A-4097-BEE8-A7C727C457E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139074A2-BE6A-4097-BEE8-A7C727C457E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139074A2-BE6A-4097-BEE8-A7C727C457E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139074A2-BE6A-4097-BEE8-A7C727C457E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4DD36E9-FCA2-4C91-A6AE-BC65B2154DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4DD36E9-FCA2-4C91-A6AE-BC65B2154DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4DD36E9-FCA2-4C91-A6AE-BC65B2154DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4DD36E9-FCA2-4C91-A6AE-BC65B2154DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {926629D9-0067-4658-9551-9E396C29DBF1}
+	EndGlobalSection
+EndGlobal
