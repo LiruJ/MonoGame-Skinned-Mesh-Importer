@@ -72,7 +72,7 @@ namespace Liru3D.Animations
         /// <remarks> Note that this does not take <see cref="IsPlaying"/> into account, only <see cref="PlaybackDirection"/>. </remarks>
         public int PlaybackDirection => Math.Sign(PlaybackSpeed);
 
-        public float PlaybackSpeed { get; set; } = -1f;
+        public float PlaybackSpeed { get; set; } = 1f;
 
         public bool IsPlaying
         {
