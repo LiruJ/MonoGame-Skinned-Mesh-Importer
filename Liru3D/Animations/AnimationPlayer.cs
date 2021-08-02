@@ -57,7 +57,7 @@ namespace Liru3D.Animations
         public float CurrentTime
         {
             get => currentTime;
-            private set
+            set
             {
                 currentTime = value;
                 CurrentTick = Animation.TicksPerSecond * CurrentTime;
@@ -66,7 +66,8 @@ namespace Liru3D.Animations
 
         public int CurrentWholeTick => (int)(PlaybackDirection == 1 ? Math.Floor(CurrentTick) : Math.Ceiling(CurrentTick));
 
-        public float CurrentTick { get; private set; }
+        /// <summary> The current tick or "frame" of the animation. </summary>
+        public float CurrentTick { get; set; }
 
         /// <summary> Gets the direction of playback, which is <c>1</c> when playing forward, <c>-1</c> when playing backward, and <c>0</c> when <see cref="PlaybackSpeed"/> is <c>0</c>. </summary>
         /// <remarks> Note that this does not take <see cref="IsPlaying"/> into account, only <see cref="PlaybackDirection"/>. </remarks>

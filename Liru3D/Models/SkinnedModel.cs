@@ -15,7 +15,7 @@ namespace Liru3D.Models
 
         public List<Animation> Animations { get; }
 
-        public int AnimationCount => Animations.Count;
+        public int AnimationCount => Animations != null ? Animations.Count : 0;
 
         public IReadOnlyList<Bone> Bones { get; }
 

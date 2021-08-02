@@ -3,6 +3,7 @@ using Liru3D.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace ContentTest
 {
@@ -22,9 +23,13 @@ namespace ContentTest
         private const Keys toggleSkeletonKey = Keys.B;
 
         private const Keys toggleHelpKey = Keys.H;
+
+        private const Keys randomisePlayPositionKey = Keys.R;
         #endregion
 
         #region Fields
+        private Random random = new Random();
+
         private SkinnedModel character;
 
         private Camera camera;
@@ -72,7 +77,7 @@ namespace ContentTest
 
             // Load the skinned character model.
             character = Content.Load<SkinnedModel>("Male");
-            
+
             // Create an animation player and set its animation.
             animationPlayer = new AnimationPlayer(character) { Animation = character.Animations[currentAnimationIndex] };
         }
@@ -115,6 +120,10 @@ namespace ContentTest
                 drawSkeleton = !drawSkeleton;
             if (currentKeyboardState.IsKeyDown(toggleHelpKey) && lastKeyboardState.IsKeyUp(toggleHelpKey))
                 drawHelp = !drawHelp;
+
+            // Handle randomisation.
+            if (currentKeyboardState.IsKeyDown(randomisePlayPositionKey) && lastKeyboardState.IsKeyUp(randomisePlayPositionKey))
+                animationPlayer.CurrentTime = (float)(animationPlayer.Animation.DurationInSeconds * random.NextDouble());
 
             // Update the animation.
             animationPlayer.Update(gameTime);
@@ -160,6 +169,7 @@ namespace ContentTest
                     $"Right click + drag to move camera, scroll to zoom\n" +
                     $"{(animationPlayer.IsPlaying ? "Stop" : "Start")} playback: {togglePlaybackKey}\n" +
                     $"Turn looping {(animationPlayer.IsLooping ? "off" : "on")}: {toggleLoopingKey}\n" +
+                    $"Randomise play position: {randomisePlayPositionKey}\n" +
                     $"Next/previous animation: {nextAnimationKey}/{previousAnimationKey}\n" +
                     $"Toggle mesh: {toggleMeshKey}\n" +
                     $"Toggle bones: {toggleSkeletonKey}\n" +
@@ -167,7 +177,7 @@ namespace ContentTest
                     $"Data:\n" +
                     $"Time: {animationPlayer.CurrentTime:F2}/{animationPlayer.Animation.DurationInSeconds:F2}\n" +
                     $"Frames: {animationPlayer.CurrentWholeTick}/{animationPlayer.Animation.DurationInTicks}", new Vector2(5));
-            
+
             // End the camera's drawing.
             camera.End();
 

@@ -40,7 +40,7 @@ All instructions are written with Blender 2.93.1 in mind. Other tools have not b
 2. Select the armature and mesh(es).
 3. Click on File>Export>FBX(.fbx).
 4. Choose a folder to export the file, obviously this is likely to be within your project's Content folder.
-5. Set "Path Mode" to copy, unless your project handles textures separately.
+5. Path mode does not matter as the importer does not load them, so path mode can be set to anything you want.
 6. Make sure "Limit to selected objects" is checked.
 7. Under "Transform", "Apply Scalings" should be set to "FBX All", "Forward" to "-Z Forward", "Up" to "Y Up", "Apply Unit" should be false, and "Use Space Transform" and "Apply Transform" should be true.
 8. Under "Armature", "Add Leaf Bones" should be false. This can be left true to include a bone at the end of any bone with no child, but has not been tested.
@@ -61,6 +61,8 @@ SkinnedModel characterModel = Content.Load<SkinnedModel>("Character");
 ```
 
 This SkinnedModel instance includes the meshes, bones, and animations loaded from the file, but by itself does not do anything. The data is immutable, meaning that it will forever remain as it was loaded.
+
+Note that textures are not loaded, which avoids the messy content problem of the default MonoGame model loader. Textures must be loaded separately and set on the effect.
 
 ## Animation
 
@@ -87,6 +89,7 @@ In order to make sure the system can work with custom effects and is not limited
 ```csharp
 SkinnedEffect effect = new SkinnedEffect(GraphicsDevice);
 
+effect.Texture = ...
 effect.View = ...
 effect.Projection = ...
 effect.World = ...
@@ -107,7 +110,12 @@ animationPlayer.IsLooping = true;
 animationPlayer.IsPlaying = true;
 ```
 
-Currently, directly changing the time of the animation is not supported. It may very well work, but it has not been tested at all, and would require the access of the property to be changed within the source code if you wish for it to be enabled.
+Playback can also be set to a specific time with the CurrentTime property, this works in seconds and ticks.
+
+```csharp
+animationPlayer.CurrentTime = 1.0f;
+animationPlayer.CurrentTick = 5;
+```
 
 # Future Plans
 
