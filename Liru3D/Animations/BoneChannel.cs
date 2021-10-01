@@ -9,17 +9,25 @@ namespace Liru3D.Animations
     public class BoneChannel
     {
         #region Properties
-        /// <summary> The name of the bone that this animation represents. </summary>
+        /// <summary> The name of the bone that this channel is for. </summary>
         public string BoneName { get; }
 
+        /// <summary> The scales channel for the bone. </summary>
         public ChannelComponent<Vector3> Scales { get; }
 
+        /// <summary> The rotations channel for the bone. </summary>
         public ChannelComponent<Quaternion> Rotations { get; }
 
+        /// <summary> The positions channel for the bone. </summary>
         public ChannelComponent<Vector3> Positions { get; }
         #endregion
 
         #region Constructors
+        /// <summary> Creates a new channel with the given animation parameters. </summary>
+        /// <param name="boneName"> The name of the bone. </param>
+        /// <param name="scaleFrames"> The scale frames. </param>
+        /// <param name="rotationFrames"> The rotation frames. </param>
+        /// <param name="positionFrames"> The position frames. </param>
         public BoneChannel(string boneName, IReadOnlyList<Keyframe<Vector3>> scaleFrames, IReadOnlyList<Keyframe<Quaternion>> rotationFrames, IReadOnlyList<Keyframe<Vector3>> positionFrames)
         {
             // Set the name.

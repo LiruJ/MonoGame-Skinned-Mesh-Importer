@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SkinnedMeshImporter</name>
+    </assembly>
+    <members>
+        <member name="M:SkinnedMeshImporter.AssimpHelpers.correctValue(System.Single)">
+            <summary> Takes the given <paramref name="value"/>, if it is infinity or NaN, returns <c>0.0</c>, otherwise returns <paramref name="value"/>. </summary>
+            <param name="value"> The value to correct. </param>
+            <returns> <c>0.0</c> if the given <paramref name="value"/> is infinity or NaN, <paramref name="value"/> otherwise. </returns>
+        </member>
+        <member name="P:SkinnedMeshImporter.SkinnedMeshProcessor.KeyframeDecimalPlaceRounding">
+            <summary> Sometimes values have a slight error due to the constant number crunching. For example, the scale might go from 1 to 0.99999994. This option allows this error to be rounded away. 0 disables rounding. </summary>
+        </member>
+        <member name="P:SkinnedMeshImporter.SkinnedMeshProcessor.armatureData.BoneNodesByBoneName">
+            <summary> The collection of bone nodes keyed by bone name. </summary>
+        </member>
+        <member name="T:Liru3D.Animations.Animation">
+            <summary> A collection of keyframes creating a single animation. </summary>
+            <remarks> Note that no changes can be made to an animation at runtime. Instances of this class are loaded through assets and an AnimationPlayer instance handles runtime changes. </remarks>
+        </member>
+        <member name="P:Liru3D.Animations.Animation.Name">
+            <summary> The name of this animation. </summary>
+        </member>
+        <member name="T:Liru3D.Animations.AnimationPlayer">
+            <summary> Stores a collection of transforms for a <see cref="T:Liru3D.Models.SkinnedModel"/> and manipulates them by playing an <see cref="P:Liru3D.Animations.AnimationPlayer.Animation"/>. </summary>
+        </member>
+        <member name="F:Liru3D.Animations.AnimationPlayer.channelPlayers">
+            <summary> Keeps track of each bone's current frame. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.CurrentTime">
+            <summary> The current time of this animation in seconds. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.CurrentTick">
+            <summary> The current tick or "frame" of the animation. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.PlaybackDirection">
+            <summary> Gets the direction of playback, which is <c>1</c> when playing forward, <c>-1</c> when playing backward, and <c>0</c> when <see cref="P:Liru3D.Animations.AnimationPlayer.PlaybackSpeed"/> is <c>0</c>. </summary>
+            <remarks> Note that this does not take <see cref="P:Liru3D.Animations.AnimationPlayer.IsPlaying"/> into account, only <see cref="P:Liru3D.Animations.AnimationPlayer.PlaybackDirection"/>. </remarks>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.ModelSpaceTransforms">
+            <summary> The transform of each bone relative to the mesh. </summary>
+            <remarks>
+            This can be used to position objects around the bones, for example; a character holding an item. 
+            This collection is created in the same order as the <see cref="P:Liru3D.Models.SkinnedModel.Bones"/> collection.
+            </remarks>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.BoneSpaceTransforms">
+            <summary> The transform of each bone in bone-space. </summary>
+            <remarks>
+            This is uploaded to the GPU in order to draw the skinned mesh.
+            This collection is created in the same order as the <see cref="P:Liru3D.Models.SkinnedModel.Bones"/> collection.
+            </remarks>
+        </member>
+        <member name="T:Liru3D.Animations.BoneChannel">
+            <summary> Hey I'm Laura from Lovebirb, and you're watching the bone channel. This class holds collections of scale, rotation, and position frames for a specific bone. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannel.BoneName">
+            <summary> The name of the bone that this channel is for. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannel.Scales">
+            <summary> The scales channel for the bone. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannel.Rotations">
+            <summary> The rotations channel for the bone. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannel.Positions">
+            <summary> The positions channel for the bone. </summary>
+        </member>
+        <member name="M:Liru3D.Animations.BoneChannel.#ctor(System.String,System.Collections.Generic.IReadOnlyList{Liru3D.Animations.Keyframe{Microsoft.Xna.Framework.Vector3}},System.Collections.Generic.IReadOnlyList{Liru3D.Animations.Keyframe{Microsoft.Xna.Framework.Quaternion}},System.Collections.Generic.IReadOnlyList{Liru3D.Animations.Keyframe{Microsoft.Xna.Framework.Vector3}})">
+            <summary> Creates a new channel with the given animation parameters. </summary>
+            <param name="boneName"> The name of the bone. </param>
+            <param name="scaleFrames"> The scale frames. </param>
+            <param name="rotationFrames"> The rotation frames. </param>
+            <param name="positionFrames"> The position frames. </param>
+        </member>
+        <member name="M:Liru3D.Animations.BoneChannelPlayer.Update">
+            <summary> Handles smooth stepping between frames, and updating the current frame. </summary>
+        </member>
+        <member name="M:Liru3D.Animations.BoneChannelPlayer.ResetToFirstFrame">
+            <summary> Resets this channel so that it is set to the first frame. </summary>
+        </member>
+        <member name="T:Liru3D.Animations.ChannelComponent`1">
+            <summary> Holds a collection of <see cref="T:Liru3D.Animations.Keyframe`1"/>s and handles their retrieval in a performant way suited to interpolation. </summary>
+            <typeparam name="T"> The type of value that is stored in each keyframe. </typeparam>
+        </member>
+        <member name="P:Liru3D.Animations.ChannelComponent`1.Keyframes">
+            <summary> Every keyframe in this channel. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.ChannelComponent`1.Count">
+            <summary> Gets the amount of keyframes in this channel. </summary>
+        </member>
+        <member name="M:Liru3D.Animations.ChannelComponent`1.#ctor(System.Collections.Generic.IReadOnlyList{Liru3D.Animations.Keyframe{`0}})">
+            <summary> Creates a new channel wrapping the given <paramref name="keyframes"/>. </summary>
+            <param name="keyframes"> The read only collection of keyframes. </param>
+        </member>
+        <member name="M:Liru3D.Animations.ChannelComponent`1.CalculateInterpolatedFrameData(Liru3D.Animations.AnimationPlayer,Liru3D.Animations.Keyframe{`0}@,`0@,System.Single@)">
+            <summary> Calculates the current frame of a playback along with some tweening data. </summary>
+            <param name="animationPlayer"> The player that is currently playing this channel. </param>
+            <param name="currentFrame"> The reference to the current frame of the playback. This will be automatically updated to the current frame of playback based on the <see cref="P:Liru3D.Animations.AnimationPlayer.CurrentTime"/>. </param>
+            <param name="nextValue"> The value of the frame directly after the current one, used for tweening. </param>
+            <param name="tweenScalar"> The value between <c>0</c> and <c>1</c> which is used to lerp between the <paramref name="currentFrame"/> and <paramref name="nextValue"/>. </param>
+        </member>
+        <member name="M:Liru3D.Animations.ChannelComponent`1.getFrameWrapped(System.Int32,System.Int32)">
+            <summary> Gets the next frame in the sequence based on the <paramref name="playbackDirection"/> and handles wrapping so that a valid frame is always returned. </summary>
+            <param name="index"> The index of the frame from which the next frame should be found. </param>
+            <param name="playbackDirection"> The direction of the animation's playback. </param>
+            <returns> The next frame in the sequence. </returns>
+        </member>
+        <member name="M:Liru3D.Animations.ChannelComponent`1.measureFrameDistance(Liru3D.Animations.AnimationPlayer,System.Single,System.Single)">
+            <summary> Measures the distance between two given ticks, taking into account wrapping and playback direction, and including fractional ticks. </summary>
+            <param name="animationPlayer"></param>
+            <param name="firstTick"> The tick that comes "first" in the playback. For reverse playback, this tick is usually closer to the end of the animation. </param>
+            <param name="secondTick"> The tick that comes "second" in the playback. </param>
+            <returns> The distance in ticks between the two frames. </returns>
+        </member>
+        <member name="M:Liru3D.Animations.ChannelComponent`1.measureFrameDistance(Liru3D.Animations.AnimationPlayer,System.Int32,System.Int32)">
+            <summary> Measures the distance between two given ticks, taking into account wrapping and playback direction. </summary>
+            <param name="animationPlayer"></param>
+            <param name="firstTick"> The tick that comes "first" in the playback. For reverse playback, this tick is usually closer to the end of the animation. </param>
+            <param name="secondTick"> The tick that comes "second" in the playback. </param>
+            <returns> The distance in ticks between the two frames. </returns>
+        </member>
+        <member name="T:Liru3D.Animations.Keyframe`1">
+            <summary> Holds a time and a <typeparamref name="T"/> value. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Keyframe`1.Index">
+            <summary> The index of this frame. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Keyframe`1.TickTime">
+            <summary> The time of this frame in ticks. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Keyframe`1.Value">
+            <summary> The value (rotation, scale, or position) of this frame. </summary>
+        </member>
+        <member name="M:Liru3D.Animations.Keyframe`1.#ctor(System.Int32,System.Int32,`0)">
+            <summary> Creates a new keyframe with the given values. </summary>
+            <param name="index"> The index of this frame within its collection. </param>
+            <param name="tickTime"> The time at which this keyframe exists. </param>
+            <param name="value"> The value of this keyframe. </param>
+        </member>
+        <member name="M:Liru3D.Animations.Keyframe`1.CompareTo(Liru3D.Animations.Keyframe{`0})">
+            <summary> Compares the <see cref="P:Liru3D.Animations.Keyframe`1.TickTime"/> of this keyframe to that of the given keyframe. </summary>
+            <param name="other"> The keyframe to compare against. </param>
+            <returns> The result of <see cref="M:System.Int32.CompareTo(System.Int32)"/>. </returns>
+        </member>
+        <member name="P:Liru3D.Models.Bone.Name">
+            <summary> The name of this bone. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Bone.Index">
+            <summary> The index of this bone. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Bone.Parent">
+            <summary> The parent of this bone, or <c>null</c> if this is the root bone. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Bone.HasParent">
+            <summary> <c>true</c> if <see cref="P:Liru3D.Models.Bone.Parent"/> is <c>null</c>, otherwise; <c>false</c>. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Bone.Offset">
+            <summary> Converts model-space orientations into bone-space orientations. </summary>
+            <remarks> 
+            Basically, as the bone moves around, this helps keep track of how much the bone has moved from its default position. 
+            If the bone is at its default position, this will be <see cref="P:Microsoft.Xna.Framework.Matrix.Identity"/> (or pretty close to it).
+            </remarks>
+        </member>
+        <member name="P:Liru3D.Models.Bone.LocalTransform">
+            <summary> The transform of the bone relative to its parent. If this bone has no parent, then it is relative to the model. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.BoneData.Offset">
+            <summary> The offset of the bone, used when rendering. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.BoneData.LocalTransform">
+            <summary> The transform of the bone relative to its parent. If this bone has no parent, then it is relative to the model. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedModelData.Meshes">
+            <summary> The collection of meshes. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedVertex.Microsoft#Xna#Framework#Graphics#IVertexType#VertexDeclaration">
+            <summary> The layout of this vertex data, compatible with the default MonoGame SkinnedEffect. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedVertex.Position">
+            <summary> The position of the vertex itself. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedVertex.BlendIndices">
+            <summary> The packed bone indices that affect this vertex's position. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedVertex.BlendWeights">
+            <summary> The amount that each bone affects the final position of this vertex. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedVertex.Normal">
+            <summary> The normal direction of this vertex. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedVertex.UV">
+            <summary> The Texture co-ordinate. </summary>
+        </member>
+        <member name="M:Liru3D.Models.SkinnedVertex.CalculateBoneCount">
+            <summary> Calculates the total number of non-zero weights of the <see cref="P:Liru3D.Models.SkinnedVertex.BlendWeights"/>, which is the total number of bones influencing this vertex. </summary>
+            <returns> The calculated number of bones which influence this vertex. </returns>
+        </member>
+        <member name="T:Liru3D.Models.SkinnedModel">
+            <summary> Contains a collection of meshes and animations. </summary>
+            <remarks> Note that no changes can be made to a model, mesh, or bone at runtime. </remarks>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedModel.Meshes">
+            <summary> The collection of meshes. </summary>
+        </member>
+    </members>
+</doc>

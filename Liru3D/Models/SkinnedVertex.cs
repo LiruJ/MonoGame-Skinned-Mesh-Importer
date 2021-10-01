@@ -4,9 +4,11 @@ using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Liru3D.Models
 {
+    /// <summary> Represents a 3D point with bone weight data to be used for skinned models. </summary>
     public struct SkinnedVertex : IVertexType
     {
         #region Backing Fields
+        /// <summary> The declaration of a single vertex used when uploading vertex data to the GPU. </summary>
         public static readonly VertexDeclaration VertexDeclaration = new VertexDeclaration(
             new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
             new VertexElement(12, VertexElementFormat.Byte4, VertexElementUsage.BlendIndices, 0),
@@ -50,6 +52,9 @@ namespace Liru3D.Models
             return boneCount;
         }
 
+        /// <summary> Sets the next value of <see cref="BlendIndices"/> and <see cref="BlendWeights"/> to the given values. </summary>
+        /// <param name="boneIndex"> The index of the next bone influence. </param>
+        /// <param name="weight"> The weight of the next bone influence. </param>
         public void SetNextWeight(int boneIndex, float weight)
         {
             // Unpack the indices and copy the weights.

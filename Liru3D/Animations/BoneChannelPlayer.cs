@@ -2,6 +2,7 @@
 
 namespace Liru3D.Animations
 {
+    /// <summary> Handles the playback of a single bone in an <see cref="AnimationPlayer"/>. </summary>
     public class BoneChannelPlayer
     {
         #region Dependencies
@@ -21,14 +22,20 @@ namespace Liru3D.Animations
         #endregion
 
         #region Properties
+        /// <summary> The current scale of the bone at this exact time. </summary>
         public Vector3 InterpolatedScale { get; private set; } = Vector3.One;
 
+        /// <summary> The current rotation of the bone at this exact time. </summary>
         public Quaternion InterpolatedRotation { get; private set; } = Quaternion.Identity;
 
+        /// <summary> The current position of the bone at this exact time. </summary>
         public Vector3 InterpolatedPosition { get; private set; } = Vector3.Zero;
 
+        /// <summary> The current transform of the bone at this exact time. </summary>
+        /// <remarks> Equal to <see cref="InterpolatedScale"/> * <see cref="InterpolatedRotation"/> * <see cref="InterpolatedPosition"/> (SRT). </remarks>
         public Matrix InterpolatedTransform { get; private set; } = Matrix.Identity;
 
+        /// <summary> The immutable channel that this player is reading from. </summary>
         public BoneChannel Channel
         {
             get => channel;
@@ -44,11 +51,9 @@ namespace Liru3D.Animations
         #endregion
 
         #region Constructors
-        public BoneChannelPlayer(AnimationPlayer animationPlayer)
-        {
-            // Set the player.
-            this.animationPlayer = animationPlayer ?? throw new System.ArgumentNullException(nameof(animationPlayer));
-        }
+        /// <summary> Creates a new channel player with the given <paramref name="animationPlayer"/>. </summary>
+        /// <param name="animationPlayer"> The animation player that is using this bone channel player. </param>
+        public BoneChannelPlayer(AnimationPlayer animationPlayer) => this.animationPlayer = animationPlayer ?? throw new System.ArgumentNullException(nameof(animationPlayer));
         #endregion
 
         #region Frame Functions

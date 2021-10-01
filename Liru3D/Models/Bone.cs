@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace Liru3D.Models
 {
+    /// <summary> Represents a single bone of a model. </summary>
     [DebuggerDisplay("{Name} ({Index})")]
     public class Bone
     {
@@ -45,6 +46,10 @@ namespace Liru3D.Models
         #endregion
 
         #region Creation Functions
+        /// <summary> Creates and returns a bone created for the given <paramref name="model"/> and from the given <paramref name="data"/>. </summary>
+        /// <param name="model"> The model that this bone belongs to. </param>
+        /// <param name="data"> The bone's data. </param>
+        /// <returns> The created bone. </returns>
         public static Bone CreateFrom(SkinnedModel model, BoneData data)
         {
             // Get the parent bone.

@@ -3,23 +3,30 @@ using System.Collections.Generic;
 
 namespace Liru3D.Animations
 {
+    /// <summary> Holds a collection of <see cref="Keyframe{T}"/>s and handles their retrieval in a performant way suited to interpolation. </summary>
+    /// <typeparam name="T"> The type of value that is stored in each keyframe. </typeparam>
     public class ChannelComponent<T> where T : struct
     {
         #region Properties
+        /// <summary> Every keyframe in this channel. </summary>
         public IReadOnlyList<Keyframe<T>> Keyframes { get; }
 
+        /// <summary> Gets the amount of keyframes in this channel. </summary>
         public int Count => Keyframes.Count;
         #endregion
 
         #region Constructors
-        public ChannelComponent(IReadOnlyList<Keyframe<T>> keyframes)
-        {
-            // Set the collections.
-            Keyframes = keyframes ?? throw new ArgumentNullException(nameof(keyframes));
-        }
+        /// <summary> Creates a new channel wrapping the given <paramref name="keyframes"/>. </summary>
+        /// <param name="keyframes"> The read only collection of keyframes. </param>
+        public ChannelComponent(IReadOnlyList<Keyframe<T>> keyframes) => Keyframes = keyframes ?? throw new ArgumentNullException(nameof(keyframes));
         #endregion
 
         #region Frame Functions
+        /// <summary> Calculates the current frame of a playback along with some tweening data. </summary>
+        /// <param name="animationPlayer"> The player that is currently playing this channel. </param>
+        /// <param name="currentFrame"> The reference to the current frame of the playback. This will be automatically updated to the current frame of playback based on the <see cref="AnimationPlayer.CurrentTime"/>. </param>
+        /// <param name="nextValue"> The value of the frame directly after the current one, used for tweening. </param>
+        /// <param name="tweenScalar"> The value between <c>0</c> and <c>1</c> which is used to lerp between the <paramref name="currentFrame"/> and <paramref name="nextValue"/>. </param>
         public void CalculateInterpolatedFrameData(AnimationPlayer animationPlayer, ref Keyframe<T> currentFrame, out T nextValue, out float tweenScalar)
         {
             // Prevent infinite looping. This should never happen, but better safe than sorry.

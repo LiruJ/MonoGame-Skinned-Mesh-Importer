@@ -123,7 +123,11 @@ namespace ContentTest
 
             // Handle randomisation.
             if (currentKeyboardState.IsKeyDown(randomisePlayPositionKey) && lastKeyboardState.IsKeyUp(randomisePlayPositionKey))
-                animationPlayer.CurrentTime = (float)(animationPlayer.Animation.DurationInSeconds * random.NextDouble());
+            {
+                //animationPlayer.CurrentTime = (float)(animationPlayer.Animation.DurationInSeconds * random.NextDouble());
+                animationPlayer.CurrentTick = random.Next(0, animationPlayer.Animation.DurationInTicks);
+                animationPlayer.IsPlaying = true;
+            }
 
             // Update the animation.
             animationPlayer.Update(gameTime);
