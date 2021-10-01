@@ -131,6 +131,6 @@ Regardless of my future plans, the current version does what it's supposed to do
 
 SkinnedMeshLoader by [Laura Jenkins (Liru)](https://www.lovebirb.com/)
 
-[Assimp](https://www.assimp.org/) and [AssimpNet](https://www.nuget.org/packages/AssimpNet/5.0.0-beta1) for removing large amounts of pain from asset importing
-[AlienScribble](https://www.youtube.com/user/AlienScribble) for the FBXLoader project which I used extensively to test against
-[Dillinger](https://dillinger.io/) for the great markdown tool for this readme file
+* [Assimp](https://www.assimp.org/) and [AssimpNet](https://www.nuget.org/packages/AssimpNet/5.0.0-beta1) for removing large amounts of pain from asset importing.
+* [AlienScribble](https://www.youtube.com/user/AlienScribble) for the FBXLoader project which I used extensively to test against.
+* [Dillinger](https://dillinger.io/) for the great markdown tool for this readme file.
