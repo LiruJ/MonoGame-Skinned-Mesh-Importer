@@ -22,14 +22,45 @@
         <member name="P:Liru3D.Animations.Animation.Name">
             <summary> The name of this animation. </summary>
         </member>
+        <member name="P:Liru3D.Animations.Animation.DurationInTicks">
+            <summary> How many ticks (frames) long this animation is. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Animation.DurationInSeconds">
+            <summary> How many seconds long this animation is. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Animation.TicksPerSecond">
+            <summary> How many ticks (frames) per second this animation plays at at 100% speed. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Animation.ChannelsByBoneName">
+            <summary> The collection of bone channels keyed by bone name. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.Animation.ChannelCount">
+            <summary> The number of bone channels in this animation. </summary>
+        </member>
+        <member name="M:Liru3D.Animations.Animation.#ctor(System.String,System.Int32,System.Int32,System.Collections.Generic.IReadOnlyDictionary{System.String,Liru3D.Animations.BoneChannel})">
+            <summary> Creates a new animation with the given data. </summary>
+            <param name="name"> The name of the animation. </param>
+            <param name="ticksPerSecond"> The playback speed of the animation in ticks. </param>
+            <param name="durationInTicks"> How long the animation is in ticks. </param>
+            <param name="channelsByBoneName"> The collection of bone channels. </param>
+        </member>
         <member name="T:Liru3D.Animations.AnimationPlayer">
             <summary> Stores a collection of transforms for a <see cref="T:Liru3D.Models.SkinnedModel"/> and manipulates them by playing an <see cref="P:Liru3D.Animations.AnimationPlayer.Animation"/>. </summary>
         </member>
         <member name="F:Liru3D.Animations.AnimationPlayer.channelPlayers">
             <summary> Keeps track of each bone's current frame. </summary>
         </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.Model">
+            <summary> The current model that is being animated. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.Animation">
+            <summary> The current animation that is being played. </summary>
+        </member>
         <member name="P:Liru3D.Animations.AnimationPlayer.CurrentTime">
             <summary> The current time of this animation in seconds. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.CurrentWholeTick">
+            <summary> The current whole tick of the animation. This is rounded down if the playback is forwards, and rounded up if it is backwards. </summary>
         </member>
         <member name="P:Liru3D.Animations.AnimationPlayer.CurrentTick">
             <summary> The current tick or "frame" of the animation. </summary>
@@ -37,6 +68,15 @@
         <member name="P:Liru3D.Animations.AnimationPlayer.PlaybackDirection">
             <summary> Gets the direction of playback, which is <c>1</c> when playing forward, <c>-1</c> when playing backward, and <c>0</c> when <see cref="P:Liru3D.Animations.AnimationPlayer.PlaybackSpeed"/> is <c>0</c>. </summary>
             <remarks> Note that this does not take <see cref="P:Liru3D.Animations.AnimationPlayer.IsPlaying"/> into account, only <see cref="P:Liru3D.Animations.AnimationPlayer.PlaybackDirection"/>. </remarks>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.PlaybackSpeed">
+            <summary> The speed multiplier of the playback, where <c>1.0f</c> is 100% at normal speed, and <c>-1.0f</c> is 100% at reverse speed. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.IsPlaying">
+            <summary> Gets or sets the value which determines if this animation is currently playing. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.AnimationPlayer.IsLooping">
+            <summary> Is <c>true</c> if this animation should loop; otherwise <c>false</c>. </summary>
         </member>
         <member name="P:Liru3D.Animations.AnimationPlayer.ModelSpaceTransforms">
             <summary> The transform of each bone relative to the mesh. </summary>
@@ -51,6 +91,22 @@
             This is uploaded to the GPU in order to draw the skinned mesh.
             This collection is created in the same order as the <see cref="P:Liru3D.Models.SkinnedModel.Bones"/> collection.
             </remarks>
+        </member>
+        <member name="M:Liru3D.Animations.AnimationPlayer.#ctor(Liru3D.Models.SkinnedModel)">
+            <summary> Creates a new animation player based on the given <paramref name="model"/>. </summary>
+            <param name="model"> The model that is to be animated. </param>
+        </member>
+        <member name="M:Liru3D.Animations.AnimationPlayer.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary> Updates the current animation so that it plays, if <see cref="P:Liru3D.Animations.AnimationPlayer.IsPlaying"/> is <c>true</c>. </summary>
+            <param name="gameTime"> The data used for timing. </param>
+        </member>
+        <member name="M:Liru3D.Animations.AnimationPlayer.SetEffectBones(Microsoft.Xna.Framework.Graphics.SkinnedEffect)">
+            <summary> Calls <see cref="M:Microsoft.Xna.Framework.Graphics.SkinnedEffect.SetBoneTransforms(Microsoft.Xna.Framework.Matrix[])"/> with the bone space transforms. </summary>
+            <param name="skinnedEffect"> The effect to set the bones of. Has no effect if this is <c>null</c>. </param>
+        </member>
+        <member name="M:Liru3D.Animations.AnimationPlayer.SetEffectBones(System.Action{Microsoft.Xna.Framework.Matrix[]})">
+            <summary> Invokes the given <paramref name="setFunction"/> with the bone space transforms collection. </summary>
+            <param name="setFunction"> The function that sets the bone space transforms of whatever needs them. </param>
         </member>
         <member name="T:Liru3D.Animations.BoneChannel">
             <summary> Hey I'm Laura from Lovebirb, and you're watching the bone channel. This class holds collections of scale, rotation, and position frames for a specific bone. </summary>
@@ -73,6 +129,29 @@
             <param name="scaleFrames"> The scale frames. </param>
             <param name="rotationFrames"> The rotation frames. </param>
             <param name="positionFrames"> The position frames. </param>
+        </member>
+        <member name="T:Liru3D.Animations.BoneChannelPlayer">
+            <summary> Handles the playback of a single bone in an <see cref="T:Liru3D.Animations.AnimationPlayer"/>. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedScale">
+            <summary> The current scale of the bone at this exact time. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedRotation">
+            <summary> The current rotation of the bone at this exact time. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedPosition">
+            <summary> The current position of the bone at this exact time. </summary>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedTransform">
+            <summary> The current transform of the bone at this exact time. </summary>
+            <remarks> Equal to <see cref="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedScale"/> * <see cref="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedRotation"/> * <see cref="P:Liru3D.Animations.BoneChannelPlayer.InterpolatedPosition"/> (SRT). </remarks>
+        </member>
+        <member name="P:Liru3D.Animations.BoneChannelPlayer.Channel">
+            <summary> The immutable channel that this player is reading from. </summary>
+        </member>
+        <member name="M:Liru3D.Animations.BoneChannelPlayer.#ctor(Liru3D.Animations.AnimationPlayer)">
+            <summary> Creates a new channel player with the given <paramref name="animationPlayer"/>. </summary>
+            <param name="animationPlayer"> The animation player that is using this bone channel player. </param>
         </member>
         <member name="M:Liru3D.Animations.BoneChannelPlayer.Update">
             <summary> Handles smooth stepping between frames, and updating the current frame. </summary>
@@ -144,6 +223,9 @@
             <param name="other"> The keyframe to compare against. </param>
             <returns> The result of <see cref="M:System.Int32.CompareTo(System.Int32)"/>. </returns>
         </member>
+        <member name="T:Liru3D.Models.Bone">
+            <summary> Represents a single bone of a model. </summary>
+        </member>
         <member name="P:Liru3D.Models.Bone.Name">
             <summary> The name of this bone. </summary>
         </member>
@@ -166,14 +248,107 @@
         <member name="P:Liru3D.Models.Bone.LocalTransform">
             <summary> The transform of the bone relative to its parent. If this bone has no parent, then it is relative to the model. </summary>
         </member>
+        <member name="M:Liru3D.Models.Bone.CreateFrom(Liru3D.Models.SkinnedModel,Liru3D.Models.Data.BoneData)">
+            <summary> Creates and returns a bone created for the given <paramref name="model"/> and from the given <paramref name="data"/>. </summary>
+            <param name="model"> The model that this bone belongs to. </param>
+            <param name="data"> The bone's data. </param>
+            <returns> The created bone. </returns>
+        </member>
+        <member name="T:Liru3D.Models.Data.BoneData">
+            <summary> Represents all the data of a bone loaded from a 3D model. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.BoneData.Name">
+            <summary> The name of the bone. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.BoneData.Index">
+            <summary> the index of this bone within the model. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.BoneData.ParentIndex">
+            <summary> The index of this bone's parent bone within the model. </summary>
+        </member>
         <member name="P:Liru3D.Models.Data.BoneData.Offset">
             <summary> The offset of the bone, used when rendering. </summary>
         </member>
         <member name="P:Liru3D.Models.Data.BoneData.LocalTransform">
             <summary> The transform of the bone relative to its parent. If this bone has no parent, then it is relative to the model. </summary>
         </member>
+        <member name="T:Liru3D.Models.Data.SkinnedMeshData">
+            <summary> Represents the data of a single skinned mesh residing within RAM (has not been uploaded to the graphics device). </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedMeshData.Name">
+            <summary> The name of the mesh. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedMeshData.Vertices">
+            <summary> The collection of vertices. Each vertex within this collection holds multiple pieces of data, see <see cref="T:Liru3D.Models.SkinnedVertex"/> for more. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedMeshData.VertexCount">
+            <summary> The number of vertices in this data. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedMeshData.Indices">
+            <summary> The collection of indices. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedMeshData.IndexCount">
+            <summary> The number of indices in this data. </summary>
+        </member>
+        <member name="M:Liru3D.Models.Data.SkinnedMeshData.#ctor(System.String,Liru3D.Models.SkinnedVertex[],System.Int32[])">
+            <summary> Creates a new data with the given name and collections. </summary>
+            <param name="name"> The name of the mesh. </param>
+            <param name="vertices"> The collection of vertices. </param>
+            <param name="indices"> The collection of indices. </param>
+        </member>
+        <member name="T:Liru3D.Models.Data.SkinnedModelData">
+            <summary> Represents the raw data of a model, residing within RAM (not yet uploaded to the graphics device). </summary>
+        </member>
         <member name="P:Liru3D.Models.Data.SkinnedModelData.Meshes">
-            <summary> The collection of meshes. </summary>
+            <summary> The collection of mesh data. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedModelData.MeshCount">
+            <summary> The number of meshes in this data. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedModelData.Animations">
+            <summary> The collection of animations. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedModelData.AnimationCount">
+            <summary> The number of animations in this data. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedModelData.Bones">
+            <summary> The collection of bone data. </summary>
+        </member>
+        <member name="P:Liru3D.Models.Data.SkinnedModelData.BoneCount">
+            <summary> The number of bones in this data. </summary>
+        </member>
+        <member name="M:Liru3D.Models.Data.SkinnedModelData.#ctor(System.Collections.Generic.IReadOnlyList{Liru3D.Models.Data.SkinnedMeshData},System.Collections.Generic.List{Liru3D.Animations.Animation},System.Collections.Generic.IReadOnlyList{Liru3D.Models.Data.BoneData})">
+            <summary> Creates a new model data with the given collections. </summary>
+            <param name="meshes"> The collection of mesh data. </param>
+            <param name="animations"> The collection of animations. </param>
+            <param name="bones"> The collection of bones. </param>
+        </member>
+        <member name="T:Liru3D.Models.SkinnedMesh">
+            <summary> A single mesh of a <see cref="T:Liru3D.Models.SkinnedModel"/>. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedMesh.Name">
+            <summary> The name of the mesh. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedMesh.VertexBuffer">
+            <summary> The vertex buffer object that contains the vertex data of this mesh. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedMesh.IndexBuffer">
+            <summary> The index buffer object that contains the index data of this mesh. </summary>
+        </member>
+        <member name="M:Liru3D.Models.SkinnedMesh.CreateFrom(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Liru3D.Models.Data.SkinnedMeshData)">
+            <summary> Creates and returns a new skinned mesh from the given <paramref name="data"/>, uploaded onto the given <paramref name="graphicsDevice"/>. </summary>
+            <param name="graphicsDevice"> The graphics device onto which the mesh will be uploaded. </param>
+            <param name="data"> The mesh data. </param>
+            <returns> The created skinned mesh. </returns>
+        </member>
+        <member name="M:Liru3D.Models.SkinnedMesh.Draw">
+            <summary> Draws this mesh. </summary>
+        </member>
+        <member name="T:Liru3D.Models.SkinnedVertex">
+            <summary> Represents a 3D point with bone weight data to be used for skinned models. </summary>
+        </member>
+        <member name="F:Liru3D.Models.SkinnedVertex.VertexDeclaration">
+            <summary> The declaration of a single vertex used when uploading vertex data to the GPU. </summary>
         </member>
         <member name="P:Liru3D.Models.SkinnedVertex.Microsoft#Xna#Framework#Graphics#IVertexType#VertexDeclaration">
             <summary> The layout of this vertex data, compatible with the default MonoGame SkinnedEffect. </summary>
@@ -197,12 +372,41 @@
             <summary> Calculates the total number of non-zero weights of the <see cref="P:Liru3D.Models.SkinnedVertex.BlendWeights"/>, which is the total number of bones influencing this vertex. </summary>
             <returns> The calculated number of bones which influence this vertex. </returns>
         </member>
+        <member name="M:Liru3D.Models.SkinnedVertex.SetNextWeight(System.Int32,System.Single)">
+            <summary> Sets the next value of <see cref="P:Liru3D.Models.SkinnedVertex.BlendIndices"/> and <see cref="P:Liru3D.Models.SkinnedVertex.BlendWeights"/> to the given values. </summary>
+            <param name="boneIndex"> The index of the next bone influence. </param>
+            <param name="weight"> The weight of the next bone influence. </param>
+        </member>
         <member name="T:Liru3D.Models.SkinnedModel">
             <summary> Contains a collection of meshes and animations. </summary>
             <remarks> Note that no changes can be made to a model, mesh, or bone at runtime. </remarks>
         </member>
         <member name="P:Liru3D.Models.SkinnedModel.Meshes">
             <summary> The collection of meshes. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedModel.Animations">
+            <summary> The collection of animations loaded from this model. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedModel.AnimationCount">
+            <summary> Gets the number of animations that exist in this model. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedModel.Bones">
+            <summary> Gets this model's <see cref="T:Liru3D.Models.Bone"/>s. </summary>
+        </member>
+        <member name="P:Liru3D.Models.SkinnedModel.BoneCount">
+            <summary> Gets the number of bones that this model has. </summary>
+        </member>
+        <member name="M:Liru3D.Models.SkinnedModel.#ctor(System.Collections.Generic.List{Liru3D.Models.SkinnedMesh},System.Collections.Generic.List{Liru3D.Animations.Animation},System.Collections.Generic.IReadOnlyList{Liru3D.Models.Bone})">
+            <summary> Creates a skinned model from the given data. </summary>
+            <param name="meshes"> The meshes. This cannot be null. </param>
+            <param name="animations"> The animations, this may be null. </param>
+            <param name="bones"> The bones. This cannot be null. </param>
+        </member>
+        <member name="M:Liru3D.Models.SkinnedModel.CreateFrom(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Liru3D.Models.Data.SkinnedModelData)">
+            <summary> Creates and returns a skinned model from the given <paramref name="data"/> and uploaded onto the given <paramref name="graphicsDevice"/>. </summary>
+            <param name="graphicsDevice"> The <see cref="T:Microsoft.Xna.Framework.Graphics.GraphicsDevice"/> where the model should exist. </param>
+            <param name="data"> The model data. </param>
+            <returns> The loaded skinned model. </returns>
         </member>
     </members>
 </doc>

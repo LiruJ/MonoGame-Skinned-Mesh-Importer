@@ -42,7 +42,7 @@ namespace Liru3D.Animations
                 if (value == null) throw new Exception("Cannot set an animation's model to null.");
 
                 // If the given model's bone count does not match the existing bone count, throw an exception.
-                if (value.BoneCount != model.BoneCount) throw new Exception("Cannot switch the model of an animation player to a model with a different number of bones.");
+                if (model != null && value.BoneCount != model.BoneCount) throw new Exception("Cannot switch the model of an animation player to a model with a different number of bones.");
 
                 // Set the model.
                 model = value;
