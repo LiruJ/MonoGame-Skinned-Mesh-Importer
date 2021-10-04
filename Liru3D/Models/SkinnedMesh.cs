@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Liru3D.Models
 {
+    /// <summary> A single mesh of a <see cref="SkinnedModel"/>. </summary>
     public class SkinnedMesh
     {
         #region Dependencies
@@ -10,10 +11,13 @@ namespace Liru3D.Models
         #endregion
 
         #region Properties
+        /// <summary> The name of the mesh. </summary>
         public string Name { get; }
 
+        /// <summary> The vertex buffer object that contains the vertex data of this mesh. </summary>
         public VertexBuffer VertexBuffer { get; }
 
+        /// <summary> The index buffer object that contains the index data of this mesh. </summary>
         public IndexBuffer IndexBuffer { get; }
         #endregion
 
@@ -28,6 +32,10 @@ namespace Liru3D.Models
         #endregion
 
         #region Creation Functions
+        /// <summary> Creates and returns a new skinned mesh from the given <paramref name="data"/>, uploaded onto the given <paramref name="graphicsDevice"/>. </summary>
+        /// <param name="graphicsDevice"> The graphics device onto which the mesh will be uploaded. </param>
+        /// <param name="data"> The mesh data. </param>
+        /// <returns> The created skinned mesh. </returns>
         public static SkinnedMesh CreateFrom(GraphicsDevice graphicsDevice, SkinnedMeshData data)
         {
             // Create a vertex buffer.
@@ -47,6 +55,7 @@ namespace Liru3D.Models
         #endregion
 
         #region Draw Functions
+        /// <summary> Draws this mesh. </summary>
         public void Draw()
         {
             graphicsDevice.SetVertexBuffer(VertexBuffer);

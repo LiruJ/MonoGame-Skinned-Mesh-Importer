@@ -12,18 +12,28 @@ namespace Liru3D.Animations
         /// <summary> The name of this animation. </summary>
         public string Name { get; }
 
+        /// <summary> How many ticks (frames) long this animation is. </summary>
         public int DurationInTicks { get; }
 
+        /// <summary> How many seconds long this animation is. </summary>
         public float DurationInSeconds => (float)DurationInTicks / TicksPerSecond;
 
+        /// <summary> How many ticks (frames) per second this animation plays at at 100% speed. </summary>
         public int TicksPerSecond { get; }
 
+        /// <summary> The collection of bone channels keyed by bone name. </summary>
         public IReadOnlyDictionary<string, BoneChannel> ChannelsByBoneName { get; }
 
+        /// <summary> The number of bone channels in this animation. </summary>
         public int ChannelCount => ChannelsByBoneName.Count;
         #endregion
 
         #region Constructors
+        /// <summary> Creates a new animation with the given data. </summary>
+        /// <param name="name"> The name of the animation. </param>
+        /// <param name="ticksPerSecond"> The playback speed of the animation in ticks. </param>
+        /// <param name="durationInTicks"> How long the animation is in ticks. </param>
+        /// <param name="channelsByBoneName"> The collection of bone channels. </param>
         public Animation(string name, int ticksPerSecond, int durationInTicks, IReadOnlyDictionary<string, BoneChannel> channelsByBoneName)
         {
             TicksPerSecond = ticksPerSecond;
