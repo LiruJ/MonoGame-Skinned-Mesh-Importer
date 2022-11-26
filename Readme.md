@@ -27,7 +27,11 @@ Once the package has been installed to the MonoGame project of your choice, the 
 2. Select the main "Content" object within the tool.
 3. Find the "References" property in the window below and click on it, a window should open.
 4. Click the "Add" button at the top right of the window.
-5. Navigate to C:\Users\{USERNAME}\.nuget\packages and open the lovebirb.monogame.skinnedmeshimporter folder.
+
+5. Navigate to C:\Users\\{USERNAME}\\.nuget\packages and open the lovebirb.monogame.skinnedmeshimporter folder.
+OR
+5. In the solution view in Visual Studio, expand Dependencies, right click on Lovebirb.MonoGame.SkinnedMeshImporter, select "Open Folder in File Explorer", copy the file path and paste that into the filepath of the content tool browser.
+
 6. Open the folder of the used version (e.g. 1.0.0), then the lib folder, finally the netstandard2.0 folder, and select the SkinnedMeshImporter.dll file.
 7. Click the "Ok" button on the window to close it.
 8. The content builder has now been referenced and skinned meshes can now be added as content.
