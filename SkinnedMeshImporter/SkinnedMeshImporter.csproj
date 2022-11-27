@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>Lovebirb.MonoGame.SkinnedMeshImporter</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>Liru</Authors>
 		<Company>Lovebirb</Company>
 		<Product>MonoGame Skinned Mesh Importer</Product>
@@ -15,8 +15,10 @@
 		<PackageIcon>LowResLogo NoOutline.png</PackageIcon>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>MonoGame</PackageTags>
-		<AssemblyVersion>1.0.1.0</AssemblyVersion>
-		<FileVersion>1.0.1.0</FileVersion>
+		<AssemblyVersion>1.0.2.0</AssemblyVersion>
+		<FileVersion>1.0.2.0</FileVersion>
+		<PackageReleaseNotes>Fixed bug where setting the current tick of an animation would have no effect.
+Made the model of an animation public so that it can be swapped out at runtime.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DocumentationFile>C:\Users\liruo\source\repos\SkinnedMeshImporter\SkinnedMeshImporter\SkinnedMeshImporter.xml</DocumentationFile>

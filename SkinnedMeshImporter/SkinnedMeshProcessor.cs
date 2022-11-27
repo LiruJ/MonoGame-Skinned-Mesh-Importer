@@ -253,15 +253,18 @@ namespace SkinnedMeshImporter
                 foreach (Assimp.Bone bone in mesh.Bones)
                     if (!bones.Contains(bone)) bones.Add(bone);
 
-            Assimp.Bone rootBone = null;
-
             // Create the raw collections to hold the data about the armature.
             List<BoneData> boneList = new List<BoneData>();
             Dictionary<string, Node> boneNodesByBoneName = new Dictionary<string, Node>();
             Dictionary<string, Assimp.Bone> bonesByNodeName = new Dictionary<string, Assimp.Bone>();
 
             // Populate the dictionaries, keying together bones and nodes.
+            Assimp.Bone rootBone = null;
             populateArmatureDictionary(bones, boneNodesByBoneName, bonesByNodeName, scene.RootNode, ref rootBone);
+
+            // Ensure a root bone exists.
+            if (rootBone == null)
+                throw new Exception("Cannot created skinned mesh of mesh with no bones!");
 
             // Create the armature with the references to the created collections.
             armature = new armatureData(rootBone, boneList, boneNodesByBoneName, bonesByNodeName);
