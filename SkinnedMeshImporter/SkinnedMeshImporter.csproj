@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>Lovebirb.MonoGame.SkinnedMeshImporter</PackageId>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Authors>Liru</Authors>
 		<Company>Lovebirb</Company>
 		<Product>MonoGame Skinned Mesh Importer</Product>
