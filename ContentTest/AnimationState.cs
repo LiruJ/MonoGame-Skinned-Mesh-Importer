@@ -1,4 +1,5 @@
-﻿using Liru3D.Animations;
+﻿using Assimp;
+using Liru3D.Animations;
 using Liru3D.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,8 @@ namespace ContentTest
 
         private const Keys toggleSkeletonKey = Keys.B;
 
+        private const Keys toggleBoundsKey = Keys.N;
+
         private const Keys toggleHelpKey = Keys.H;
 
         private const Keys randomisePlayPositionKey = Keys.R;
@@ -34,7 +37,9 @@ namespace ContentTest
 
         private Camera camera;
 
-        private Model arrow;
+        private Model arrowModel;
+
+        private Model boundingSphereModel;
 
         private AnimationPlayer animationPlayer;
 
@@ -47,6 +52,8 @@ namespace ContentTest
         private bool drawMesh = true;
 
         private bool drawSkeleton = true;
+
+        private bool drawBoundingSpheres = false;
 
         private bool drawHelp = true;
         #endregion
@@ -71,8 +78,9 @@ namespace ContentTest
             // Create the camera.
             camera = new Camera(GraphicsDevice, font);
 
-            // Get the arrow and texture.
-            arrow = Content.Load<Model>("Arrow");
+            // Get the models and textures.
+            arrowModel = Content.Load<Model>("Arrow");
+            boundingSphereModel = Content.Load<Model>("BoundingSphere");
             texture = Content.Load<Texture2D>("MaleTexture");
 
             // Load the skinned character model.
@@ -120,11 +128,12 @@ namespace ContentTest
                 drawSkeleton = !drawSkeleton;
             if (currentKeyboardState.IsKeyDown(toggleHelpKey) && lastKeyboardState.IsKeyUp(toggleHelpKey))
                 drawHelp = !drawHelp;
+            if (currentKeyboardState.IsKeyDown(toggleBoundsKey) && lastKeyboardState.IsKeyUp(toggleBoundsKey))
+                drawBoundingSpheres = !drawBoundingSpheres;
 
             // Handle randomisation.
             if (currentKeyboardState.IsKeyDown(randomisePlayPositionKey) && lastKeyboardState.IsKeyUp(randomisePlayPositionKey))
             {
-                //animationPlayer.CurrentTime = (float)(animationPlayer.Animation.DurationInSeconds * random.NextDouble());
                 animationPlayer.CurrentTick = random.Next(0, animationPlayer.Animation.DurationInTicks);
                 animationPlayer.IsPlaying = true;
             }
@@ -161,11 +170,24 @@ namespace ContentTest
                 for (int i = 0; i < character.BoneCount; i++)
                 {
                     // Draw the bone as an arrow.
-                    camera.Draw(arrow, animationPlayer.ModelSpaceTransforms[i]);
+                    camera.Draw(arrowModel, animationPlayer.ModelSpaceTransforms[i]);
 
                     // Draw the name of the bone.
                     camera.DrawString(character.Bones[i].Name, animationPlayer.ModelSpaceTransforms[i].Translation);
                 }
+
+            // Draw the bounding spheres.
+            if (drawBoundingSpheres)
+            {
+                // Set the parameters on the bounding spheres.
+                foreach (ModelMesh mesh in boundingSphereModel.Meshes)
+                    foreach (Effect effect in mesh.Effects)
+                        effect.Parameters["DiffuseColor"].SetValue(new Color(Color.Green, 0.5f).ToVector4());
+
+                // Draw the bounding spheres on each mesh.
+                foreach (SkinnedMesh mesh in animationPlayer.Model.Meshes)
+                    camera.Draw(boundingSphereModel, Matrix.CreateScale(mesh.BoundingSphere.Radius) * Matrix.CreateTranslation(mesh.BoundingSphere.Center));
+            }
 
             // Draw the help.
             if (drawHelp)
@@ -177,6 +199,7 @@ namespace ContentTest
                     $"Next/previous animation: {nextAnimationKey}/{previousAnimationKey}\n" +
                     $"Toggle mesh: {toggleMeshKey}\n" +
                     $"Toggle bones: {toggleSkeletonKey}\n" +
+                    $"Toggle bounds: {toggleBoundsKey}\n" +
                     $"Toggle help: {toggleHelpKey}\n" +
                     $"Data:\n" +
                     $"Time: {animationPlayer.CurrentTime:F2}/{animationPlayer.Animation.DurationInSeconds:F2}\n" +

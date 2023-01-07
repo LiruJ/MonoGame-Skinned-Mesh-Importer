@@ -1,7 +1,10 @@
-﻿namespace Liru3D.Models.Data
+﻿using Microsoft.Xna.Framework;
+using System.Linq;
+
+namespace Liru3D.Models.Data
 {
     /// <summary> Represents the data of a single skinned mesh residing within RAM (has not been uploaded to the graphics device). </summary>
-    public struct SkinnedMeshData
+    public readonly struct SkinnedMeshData
     {
         #region Properties
         /// <summary> The name of the mesh. </summary>
@@ -11,13 +14,13 @@
         public SkinnedVertex[] Vertices { get; }
 
         /// <summary> The number of vertices in this data. </summary>
-        public int VertexCount => Vertices.Length;
+        public int VertexCount => Vertices == null ? 0 : Vertices.Length;
 
         /// <summary> The collection of indices. </summary>
         public int[] Indices { get; }
 
         /// <summary> The number of indices in this data. </summary>
-        public int IndexCount => Indices.Length;
+        public int IndexCount => Indices == null ? 0 : Indices.Length;
         #endregion
 
         #region Constructors
@@ -31,6 +34,12 @@
             Vertices = vertices;
             Indices = indices;
         }
+        #endregion
+
+        #region Bounding Functions
+        /// <summary> Calculates a bounding sphere for the data's vertices. </summary>
+        /// <returns> The calculated bounding sphere. </returns>
+        public BoundingSphere CalculateBoundingSphere() => VertexCount == 0 ? new BoundingSphere() : BoundingSphere.CreateFromPoints(Vertices.Select(v => v.Position));
         #endregion
     }
 }
